@@ -1,0 +1,235 @@
+body {
+    margin: 0;
+    /* font-family: 'Press Start 2P', sans-serif; */
+    font-family: 'Didact Gothic', sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.canvas {
+    display: flex;
+    background-color: rgb(255, 204, 255);
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #333;
+    color: white;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', sans-serif;
+}
+
+.sidebar-top {
+    flex: 0 0 10%; 
+    width: 100%;
+    font-size: 10px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: black solid 1px;
+}
+.sidebar-mid {
+    flex: 1;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.menu-item {
+    width: calc(100% - 4px);
+    padding: 10px;
+    margin: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    /* border: black solid 1px; */
+}
+.menu-item:hover {
+    background-color: black;
+    text-decoration: underline;
+    color: white;
+}
+.sidebar-bottom {
+    flex: 0 0 10%; 
+    width: 100%;
+    font-size: 10px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: 10px;
+    border: black solid 1px;
+}
+
+
+.main-contents {
+    position: relative; 
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border: black solid 1px;
+}
+
+.crud_create{
+    position: absolute;
+    width: 98%;
+    height: 100%;
+    padding: 10px;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(204, 255, 255);
+    border-radius: 10px;
+}
+.crud_create h1{
+    font-family: 'Press Start 2P', sans-serif;
+}
+#create-form-container {
+    display: flex;
+    flex-direction: column;
+}
+.form-advisor {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    border-left: black solid 0.1px;
+    border-right: black solid 0.1px;
+    border-bottom: black solid 0.1px;
+}
+.form-advisor label {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+.form-advisor input{
+    flex: 1;
+    height: 100px;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-family: 'Didact Gothic', sans-serif;
+    box-sizing: border-box;
+}
+.form-advisor select{
+    flex: 1;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-family: 'Didact Gothic', sans-serif;
+}
+.form-advisor button{
+    height: 50px;
+}
+
+.db-tables {
+    position: absolute;
+    width: 99%;
+    height: 99%;
+    padding: 10px;
+    display: none; 
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: rgb(204, 255, 255);
+    border-radius: 10px;
+}
+.db-tables h1{
+    font-family: 'Press Start 2P', sans-serif;
+}
+.table-category {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', sans-serif;
+}
+.table-category span{
+    flex: 1;
+    padding: 10px;
+    margin-bottom: 0;
+    cursor: pointer;
+    border-radius: 10px 10px 0px 0px;
+    border: black solid 1px;
+}
+.table-category span:hover{
+    background-color: #333;
+    text-decoration: underline;
+    color: white;
+}
+#table-data-container table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: left;
+}
+#table-data-container table th {
+    padding: 10px;
+    background-color: black;
+    color: greenyellow;
+    text-align: center;
+}
+#table-data-container table td {
+    padding: 5px;
+    background-color: rgba(255, 204, 255, 0.9);
+    text-align: center;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.page-link {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: black;
+    cursor: pointer;
+    text-decoration: none;
+}
+.page-link:hover {
+    background-color: #f4f4f4;
+}
+.page-link.active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+
+
+
+
+.query{
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    display: none; 
+    flex-direction: column;
+    background-color: rgb(204, 204, 255);
+    border-radius: 10px;
+}
+
+.active {
+    background-color: azure;
+    color: black;
+}

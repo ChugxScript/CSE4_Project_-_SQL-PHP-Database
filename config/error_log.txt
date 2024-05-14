@@ -1,0 +1,5 @@
+[14-May-2024 15:27:19 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry 'TUPM-P-11-1111' for key 'advisor.PRIMARY' in D:\Documents\Studey\3. Studey BSCS-3B-M 2nd sem\CSE4-M - CS Professional Elective 4\Laboratory\CSE4_Project_-_SQL-PHP-Database\config\save_data.php:31
+Stack trace:
+#0 D:\Documents\Studey\3. Studey BSCS-3B-M 2nd sem\CSE4-M - CS Professional Elective 4\Laboratory\CSE4_Project_-_SQL-PHP-Database\config\save_data.php(31): mysqli_stmt->execute()
+#1 {main}
+  thrown in D:\Documents\Studey\3. Studey BSCS-3B-M 2nd sem\CSE4-M - CS Professional Elective 4\Laboratory\CSE4_Project_-_SQL-PHP-Database\config\save_data.php on line 31
