@@ -1,5 +1,3 @@
-// assets/create_row.js
-
 function create_row_from_col() {
     const tableSelects = document.querySelectorAll('.table-select-c');
     const createFormContainer = document.getElementById('create-form-container');
@@ -7,60 +5,29 @@ function create_row_from_col() {
 
     tableSelects.forEach(tableSelect => {
         tableSelect.addEventListener('click', function() {
+            tableSelects.forEach(select => {
+                select.classList.remove('active');
+            });
+            this.classList.add('active');
+            activeTable = this;
+            
             const tableName = this.getAttribute('data-table-c');
             console.log(">>", tableName);
 
-            fetch('config/get_dropdown_options.php', {
+            fetch('config/create_form.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body: `table_name=${tableName}`
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.statusText}`);
-                }
-                return response.text();
-            })
+            .then(response => response.text())
             .then(data => {
-                if (data) {
-                    createFormContainer.innerHTML = data;
-
-                    // Form submission event
-                    const form = document.getElementById('create-form');
-                    form.addEventListener('submit', function(e) {
-                        e.preventDefault();
-
-                        const formData = new FormData(this);
-                        formData.append('table_name', tableName); 
-                        
-                        fetch('config/save_data.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`Network response was not ok: ${response.statusText}`);
-                            }
-                            return response.json();
-                        })
-                        .then(result => {
-                            if (result.status === 'success') {
-                                alert(result.message);
-                                // Optionally, reset the form or update the UI
-                                form.reset();
-                            } else {
-                                alert(result.message);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error saving data:', error);
-                        });
-                    });
-                } else {
+                if (!data) {
                     throw new Error('Form data is empty or undefined');
                 }
+                createFormContainer.innerHTML = data;
+                setupCreateFormSubmission(tableName);
             })
             .catch(error => {
                 console.error('Error fetching form:', error);
@@ -75,4 +42,27 @@ function create_row_from_col() {
     }
 }
 
-create_row_from_col();
+function setupCreateFormSubmission(tableName) {
+    const form = document.getElementById('create-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        formData.append('table_name', tableName);
+
+        fetch('config/create_data.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            create_row_from_col();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+}

@@ -68,11 +68,50 @@
                 </div>
             </div>
 
+        <!-- UPDATE -->
+            <div class="crud-update" id="update_container">
+                <h1>DATABASE UPDATE ROW</h1>
+                <div class="table-category">
+                    <?php
+                    foreach ($tables as $table) {
+                        $selectedClass = ($table == 'advisor') ? 'selected-table-u' : '';
+                        echo '<span class="table-select-u ' . $selectedClass . '" data-table-u="' . $table . '">' . strtoupper($table) . '</span>';
+                    }
+                    ?>
+                </div>
+                <div id="update-form-container">
+                    <!-- form will display here -->
+                </div>
+            </div>
+        
+        <!-- DELETE -->
+            <div class="crud-delete" id="delete_container">
+                <h1>DATABASE DELETE ROW</h1>
+                <div class="table-category">
+                    <?php
+                    foreach ($tables as $table) {
+                        $selectedClass = ($table == 'advisor') ? 'selected-table-d' : '';
+                        echo '<span class="table-select-d ' . $selectedClass . '" data-table-d="' . $table . '">' . strtoupper($table) . '</span>';
+                    }
+                    ?>
+                </div>
+                <div id="delete-form-container">
+                    <!-- form will display here -->
+                </div>
+            </div>
         
         
         <!-- QUERY -->
             <div class="query" id="query_container">
-                <h1>DATABASE QUERIES</h1>
+                <h1>DATABASE QUERIES (RELATIONSHIPS)</h1>
+                <div class="table-category">
+                    <span class="table-select-q" data-table-q="STUDENT-ADVISOR" id="STUDENT-ADVISOR">STUDENT-ADVISOR</span>
+                    <span class="table-select-q" data-table-q="ADVISOR-DEPARTMENT">ADVISOR-DEPARTMENT</span>
+                    <span class="table-select-q" data-table-q="COURSE">COURSE</span>
+                </div>
+                <div id="query-table-container">
+                    <!-- table will display here -->
+                </div>
             </div>
             
         </div>
@@ -80,9 +119,12 @@
 
 
     <script src="assets/script.js"></script>
-    
-    <script src="assets/read_tables.js"></script>
+    <!-- <script src="assets/handle_row_form.js"></script> -->
     <script src="assets/create_row.js"></script>
+    <script src="assets/read_tables.js"></script>
+    <script src="assets/update_row.js"></script>
+    <script src="assets/delete_row.js"></script>
+    <script src="assets/query_db.js"></script>
     <script src="assets/menu_items.js"></script>
 </body>
 </html>

@@ -35,6 +35,15 @@ menuItems.forEach(menuItem => {
         if (category === 'READ' && content.style.display === 'flex') {
             read_tables();
         }
+        if (category === 'UPDATE' && content.style.display === 'flex') {
+            update_row_from_col();
+        }
+        if (category === 'DELETE' && content.style.display === 'flex') {
+            delete_row_from_col();
+        }
+        if (category === 'QUERY' && content.style.display === 'flex') {
+            get_queries_from_db();
+        }
         
         // Toggle active class
         menuItems.forEach(item => {

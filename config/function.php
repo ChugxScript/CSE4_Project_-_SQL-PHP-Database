@@ -1,4 +1,3 @@
-<!-- config/function.php -->
 <?php
 
 function getDB(){
@@ -24,20 +23,6 @@ function getTables($conn){
         $tables[] = $row[0];
     }
     return $tables;
-}
-
-function getTableData($conn, $table, $start, $limit) {
-    $data = [];
-    $query = "SELECT * FROM $table LIMIT $start, $limit";
-    $result = $conn->query($query);
-
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
-    }
-
-    return $data;
 }
 
 function getTableCount($conn, $table) {
