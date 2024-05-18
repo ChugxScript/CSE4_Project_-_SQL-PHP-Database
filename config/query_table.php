@@ -115,6 +115,7 @@ function queryAdvisorToDepartment($conn, $rowsPerPage, $offset){
 }
 
 function queryCourse($conn, $rowsPerPage, $offset){
+    // course table has no relationship to any tables in the database
     $sql = "SELECT * FROM `course`
             LIMIT ?, ?";
     $stmt = $conn->prepare($sql);
