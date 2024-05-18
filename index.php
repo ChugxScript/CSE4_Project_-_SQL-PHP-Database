@@ -28,7 +28,7 @@
                 <p class="menu-item" data-content="query_container">QUERY</p>
             </div>
             <div class="sidebar-bottom">
-                <p>CREATED BY: ME</p>
+                <p>CREATED BY: OLORS</p>
             </div>
         </div>
 
