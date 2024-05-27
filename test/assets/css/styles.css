@@ -1,0 +1,95 @@
+/* CSS for action buttons */
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* Reduced font size */
+    padding: 6px 10px; /* Reduced padding */
+    position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background color and text color */
+    border-radius: 15px; /* Reduced border-radius for smaller rounded corners */
+}
+
+/* Delete button style */
+.action-button.delete {
+    color: #fff; /* Text color */
+    background-color: #ff5f5f; /* Red background color */
+}
+
+/* Update button style */
+.action-button.update {
+    color: #fff; /* Text color */
+    background-color: #5f97ff; /* Blue background color */
+}
+
+/* Tooltip style */
+.tooltip {
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 3px 8px; /* Reduced padding for tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -25px; /* Adjusted top position for tooltip */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for visibility */
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent;
+}
+
+/* Tooltip show on hover */
+.action-button:hover .tooltip {
+    visibility: visible;
+    opacity: 1; /* Show tooltip */
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 30px; /* Adjust the value to control the roundness */
+    overflow: hidden; /* Ensures rounded corners are applied */
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-container {
+    display: flex;
+    gap: 10px; /* Space between pagination links */
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 12px; /* Adjust padding for better appearance */
+    border-radius: 4px;
+    background-color: #4a5568; /* Tailwind's bg-gray-600 */
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #2d3748; /* Tailwind's bg-gray-700 */
+}
+
+.lower-svg {
+    margin-top: 30px; 
+}
