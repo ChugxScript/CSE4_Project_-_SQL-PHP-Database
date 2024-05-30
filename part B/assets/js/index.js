@@ -84,17 +84,6 @@ function hideLoginModal() {
 loginBtn.addEventListener('click', showLoginModal);
 
 
-// Function to get query parameters
-function getQueryParam(param) {
-    let params = new URLSearchParams(window.location.search);
-    return params.get(param);
-}
-
-// Check if 'login' query parameter is 'error'
-if (getQueryParam('login') === 'error') {
-    document.getElementById('loginModal').classList.remove('hidden');
-}
-
 // Function to close the modal
 function closeModal() {
     document.getElementById('loginModal').classList.add('hidden');
@@ -108,6 +97,60 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         closeModal();
     }
+});
+
+document.getElementById("login_btn").addEventListener("click", function(){
+    event.preventDefault();
+    const form = document.getElementById('loginForm');
+    const formData = new FormData(form);
+
+    formData.forEach((value, key) => {
+        console.log(key + ": " + value);
+    });
+    
+    $.ajax({
+        url: './pages/utils/login_user.php',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function(response) {
+            const { role, user_id, message } = response;
+            if (message.startsWith('[SUCCESS]')) {
+                const msg = message.replace('[SUCCESS]', '').trim();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: msg ,
+                }).then(() => {
+                    window.location.href = `./pages/${role}.php?user_id=${user_id}`;
+                });
+            } else if (message.startsWith('[ERROR]')) {
+                const msg = message.replace('[ERROR]', '').trim();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: msg,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning',
+                    text: 'Unexpected response from server. Please try again.',
+                });
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error: " + textStatus + " - " + errorThrown);
+            console.log(jqXHR.responseText);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to process request. Please try again.',
+            });
+        }
+    });
 });
 
 

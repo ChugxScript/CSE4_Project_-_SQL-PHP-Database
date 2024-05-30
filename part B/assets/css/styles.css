@@ -3,8 +3,8 @@
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 14px; /* Reduced font size */
-    padding: 6px 10px; /* Reduced padding */
+    font-size: 12px; /* Reduced font size */
+    padding: 4px 4px; /* Reduced padding */
     position: relative;
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for background color and text color */
     border-radius: 15px; /* Reduced border-radius for smaller rounded corners */
@@ -20,6 +20,12 @@
 .action-button.update {
     color: #fff; /* Text color */
     background-color: #5f97ff; /* Blue background color */
+}
+
+/* view button style */
+.action-button.view {
+    color: #fff; /* Text color */
+    background-color: #0059ff; /* Blue background color */
 }
 
 /* Tooltip style */
@@ -92,4 +98,14 @@ table {
 
 .lower-svg {
     margin-top: 30px; 
+}
+
+.fixed-width {
+    max-width: 200px; /* Adjust the max width as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.word-wrap {
+    word-wrap: break-word;
 }

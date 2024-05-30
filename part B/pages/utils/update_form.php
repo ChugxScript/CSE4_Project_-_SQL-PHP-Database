@@ -10,7 +10,7 @@ if (!in_array($table, $valid_tables)) {
 }
 
 function generateUpdateForm($conn, $table, $row_id) {
-    $form = '<form id="updateForm" data-form="' . $table . '" class="bg-white rounded px-8 pt-6 pb-8 mb-4">';
+    $form = '<form id="updateForm" data-form="' . $table . '" class="bg-white rounded px-8 pt-6 pb-8">';
 
     if ($table === 'student') {
         $safe_row_id = $conn->real_escape_string($row_id);
@@ -26,7 +26,7 @@ function generateUpdateForm($conn, $table, $row_id) {
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="update_student_id">
                         Student ID
                     </label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 bg-gray-200 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                         id="update_student_id" 
                         name="update_student_id" 
                         type="text" 
@@ -74,7 +74,7 @@ function generateUpdateForm($conn, $table, $row_id) {
                         type="text" 
                         value="' . $s_row['first_name'] . '">
                 </div>
-                <div class="mb-4 relative">
+                <div class="relative">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="update_last_name">
                         Last Name
                     </label>

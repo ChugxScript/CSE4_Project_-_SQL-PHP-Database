@@ -115,7 +115,7 @@
                 &times;
             </button>
             <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
-            <form id="loginForm" action="config/login.php" method="post">
+            <form id="loginForm" method="post">
                 <div class="mb-4">
                     <label for="lgn_username" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
                     <input type="email" id="lgn_username" name="lgn_username" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -125,7 +125,7 @@
                     <input type="password" id="lgn_password" name="lgn_password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="flex items-center justify-center">
-                    <button type="submit" name="submit-login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+                    <button type="submit" id="login_btn" name="submit-login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
                 </div>
             </form>
         </div>
@@ -142,6 +142,8 @@
     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./assets/js/index.js"></script>
 
     <script>
