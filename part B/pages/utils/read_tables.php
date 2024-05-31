@@ -78,8 +78,7 @@ function generateTableHTML($result, $table) {
     
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $html .= '<tr class="odd:bg-slate-900 even:bg-slate-800">
-                        <button>';
+            $html .= '<tr class="odd:bg-slate-900 even:bg-slate-800">';
             if ($table === 'student') {
                 $html .= "<td class='px-4 py-2 text-left text-white fixed-width'>" . $row["student_id"] . "</td>
                             <td class='px-4 py-2 text-left text-white fixed-width'>" . $row["student_first_name"] . "</td>
@@ -108,7 +107,7 @@ function generateTableHTML($result, $table) {
             // Add other tables data here
             // else if ($table === 'advisor') { ... }
 
-            $html .= "</button></tr>";
+            $html .= "</tr>";
         }
     } else {
         $html .= "<tr><td colspan='6' class='px-4 py-2 text-left text-white'>No data found</td></tr>";

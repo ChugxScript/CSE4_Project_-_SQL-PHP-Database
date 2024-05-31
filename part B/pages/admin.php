@@ -140,7 +140,15 @@
                 
                 <div class="flex justify-between items-center mb-4">
                     <!-- Search bar -->
-                    <input type="text" placeholder="Search..." class="px-4 py-2 rounded bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 flex-grow mr-4" />
+                    <div class="flex-grow flex items-center bg-gray-800 rounded mr-4">
+                        <input type="text" id="student_searchBox" data-table="student" placeholder="Search..." class="px-4 py-2 w-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l" />
+                        <button id="student_search" data-table="student" class="px-4 py-2 rounded-r bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
 
                     <!-- + icon -->
                     <button id="openModalButton" data-table='student' class="bg-green-500 text-white flex items-center px-4 py-2 rounded hover:bg-green-600 focus:outline-none">
@@ -169,7 +177,7 @@
 
                         // Show pagination links
                         for ($i = 1; $i <= $total_pages; $i++) {
-                            echo "<button onclick='loadPage(\"student\", $i)' class='px-3 py-1 rounded bg-gray-600 text-white'>$i</button>";
+                            echo "<button onclick='loadPage(\"admin\", \"student\", $i)' class='px-3 py-1 rounded bg-gray-600 text-white'>$i</button>";
                         }
                         ?>
                     </div>

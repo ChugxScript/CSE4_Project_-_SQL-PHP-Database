@@ -1,6 +1,4 @@
-
 function attachEventListeners() {
-
     // update
     document.querySelectorAll('.action-button.update').forEach(button => {
         button.addEventListener('click', function() {
@@ -120,20 +118,56 @@ function attachEventListeners() {
     // side bar
     document.getElementById("dashboard_link").addEventListener("click", function(event) {
         event.preventDefault();
-        document.getElementById("dashboard_container").classList.toggle("hidden");
-        document.getElementById("student_container").classList.add("hidden");
+        switch_tab("DASHBOARD");
     });
 
     document.getElementById("student_link").addEventListener("click", function(event) {
         event.preventDefault();
-        document.getElementById("student_container").classList.toggle("hidden");
-        document.getElementById("dashboard_container").classList.add("hidden");
+        switch_tab("STUDENT");
         loadPage('admin', 'student', 1);
     });
 }
 
+function switch_tab(curr_tab){
+    switch(curr_tab){
+        case "DASHBOARD":
+            document.getElementById("dashboard_container").classList.remove("hidden");
+            document.getElementById("student_container").classList.add("hidden");
+            break;
+        case "STUDENT":
+            document.getElementById("dashboard_container").classList.add("hidden");
+            document.getElementById("student_container").classList.remove("hidden");
+            break;
+        case "ADVISOR":
+            break;
+        case "DEPARTMENT":
+            break;
+        case "COURSE":
+            break;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    attachEventListeners(); // Initial load
+    attachEventListeners();
+
+    // Search functionality
+    document.getElementById('student_search').addEventListener('click', function() {
+        const searchTerm = document.getElementById('student_searchBox').value.trim();
+        const s_table = this.getAttribute('data-table');
+        if (searchTerm) {
+            searchRow(searchTerm, s_table);
+        }
+    });
+
+    document.getElementById('student_searchBox').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            const searchTerm = document.getElementById('student_searchBox').value.trim();
+            const s_table = this.getAttribute('data-table');
+            if (searchTerm) {
+                searchRow(searchTerm, s_table);
+            }
+        }
+    });
 
     // details
     document.getElementById('closeDetails').addEventListener('click', function() {
@@ -324,6 +358,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+function searchRow(searchTerm, s_table) {
+    $.ajax({
+        url: '../pages/utils/search_row.php',
+        type: 'GET',
+        data: { table: s_table, query: searchTerm },
+        success: function(response) {
+            if (response.startsWith('[ERROR]')){
+                const message = response.replace('[ERROR]', '').trim();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: message,
+                });
+
+            } else {
+                $('#student_table').html('');
+                $('#student_table').html(response);
+                attachEventListeners(); 
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error: " + textStatus + " - " + errorThrown);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to search data. Please try again.',
+            });
+        }
+    });
+}
+
 function loadCreateForm(table) {
     $.ajax({
         url: '../pages/utils/create_form.php',
@@ -357,7 +422,7 @@ function loadPage(user, table, page) {
         data: { user: user, table: table, page: page },
         success: function(response) {
             $('#student_table').html(response);
-            attachEventListeners(); // Re-attach event listeners after AJAX load
+            attachEventListeners();
         }
     });
 }

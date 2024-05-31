@@ -180,12 +180,17 @@ function createStudent($conn) {
 
     // Check if advisor_id exists
     if (!checkIfExists($conn, 'advisor', 'advisor_id', $advisor_id)) {
-        return '[ERROR] Invalid advisor_id.';
+        return '[ERROR] Advisor ID does not exist.';
     }
 
     // Check if student_id already exists
     if (checkIfExists($conn, 'student', 'student_id', $student_id)) {
-        return '[ERROR] student_id already exists.';
+        return '[ERROR] student ID already exists.';
+    }
+
+    // Check if username already exists
+    if (checkIfExists($conn, 'users', 'username', $users_user_name)) {
+        return '[ERROR] username already exists.';
     }
 
     // Insert new user into the users table
