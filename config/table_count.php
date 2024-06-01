@@ -30,31 +30,27 @@ function getTotalCourses($conn) {
     return $row['total_courses'];
 }
 
-function getAdvisorStudentRatio($conn) {
-    $total_students = getTotalStudents($conn);
-    $total_advisors = getTotalAdvisors($conn);
-    if ($total_advisors > 0) {
-        return $total_students / $total_advisors;
-    } else {
-        return "N/A";
-    }
+function getTotalMaleStudent($conn) {
+    $sql_male = "SELECT COUNT(*) AS male_count FROM student WHERE assigned_sex = 'Male'";
+    $result_male = $conn->query($sql_male);
+    return $result_male->fetch_assoc()['male_count'];
 }
 
-// Function to fetch data for Department Overview chart
-function getDepartmentOverviewData($conn) {
-    $departmentData = array();
-    $result = $conn->query("SELECT d.department_name, COUNT(*) AS student_count 
-                            FROM student s
-                            INNER JOIN advisor a ON s.advisor_id = a.advisor_id
-                            INNER JOIN department d ON a.department_id = d.department_id
-                            GROUP BY d.department_id");
-    while ($row = $result->fetch_assoc()) {
-        $departmentData['labels'][] = $row['department_name'];
-        $departmentData['studentCounts'][] = $row['student_count'];
-    }
-    return $departmentData;
+function getTotalFemaleStudent($conn) {
+    $sql_female = "SELECT COUNT(*) AS female_count FROM student WHERE assigned_sex = 'Female'";
+    $result_female = $conn->query($sql_female);
+    return $result_female->fetch_assoc()['female_count'];
 }
 
+function getTotalMaleAdvisor($conn) {
+    $sql_male = "SELECT COUNT(*) AS male_count FROM advisor WHERE assigned_sex = 'Male'";
+    $result_male = $conn->query($sql_male);
+    return $result_male->fetch_assoc()['male_count'];
+}
 
-
+function getTotalFemaleAdvisor($conn) {
+    $sql_female = "SELECT COUNT(*) AS female_count FROM advisor WHERE assigned_sex = 'Female'";
+    $result_female = $conn->query($sql_female);
+    return $result_female->fetch_assoc()['female_count'];
+}
 ?>

@@ -93,14 +93,16 @@
                         </div>
                     </div>
 
-                    <!-- Advisor-Student Ratio -->
-                    <div class="bg-gray-200 p-4 rounded text-white">
-                        <canvas id="advisorStudentRatioChart" width="400" height="200"></canvas>
+                    <!-- student male and female -->
+                    <div class="bg-gray-800 p-4 rounded text-white">
+                        <h2 class="text-lg font-semibold mb-2">Student Gender Distribution</h2>
+                        <canvas id="studentGenderChart"></canvas>
                     </div>
 
-                    <!-- Department Overview -->
-                    <div class="bg-gray-200 p-4 rounded" >
-                        <canvas id="departmentOverviewChart" width="400" height="200"></canvas>
+                    <!-- adviser male and female -->
+                    <div class="bg-gray-800 p-4 rounded text-white">
+                        <h2 class="text-lg font-semibold mb-2">Advisor Gender Distribution</h2>
+                        <canvas id="advisorGenderChart"></canvas>
                     </div>
 
                 </div>
@@ -144,16 +146,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./assets/js/index.js"></script>
 
     <script>
-        // Call the function with the Advisor-Student Ratio retrieved from PHP
-        var advisorStudentRatio = <?php echo getAdvisorStudentRatio($conn); ?>;
-        renderAdvisorStudentRatioChart(advisorStudentRatio);
-
-        // Call the function with the department data retrieved from PHP
-        var departmentData = <?php echo json_encode(getDepartmentOverviewData($conn)); ?>;
-        renderDepartmentOverviewChart(departmentData);
+        var total_male_student = <?php echo getTotalMaleStudent($conn); ?>;
+        var total_female_student = <?php echo getTotalFemaleStudent($conn); ?>;
+        var total_male_advisor = <?php echo getTotalMaleAdvisor($conn); ?>;
+        var total_female_advisor = <?php echo getTotalFemaleAdvisor($conn); ?>;
+        console.log(`total_male_student: ${total_male_student}`);
+        console.log(`total_female_student: ${total_female_student}`);
+        console.log(`total_male_advisor: ${total_male_advisor}`);
+        console.log(`total_female_advisor: ${total_female_advisor}`);
+        renderStudentGenderChart(total_male_student, total_female_student);
+        renderAdvisorGenderChart(total_male_advisor, total_female_advisor);
     </script>
 </body>
 </html>

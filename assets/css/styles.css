@@ -71,6 +71,13 @@ table {
     overflow: hidden; /* Ensures rounded corners are applied */
 }
 
+table th {
+    font-size: 13px;
+}
+table td {
+    font-size: 12px;
+}
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -108,4 +115,5 @@ table {
 }
 .word-wrap {
     word-wrap: break-word;
+    white-space: normal;
 }

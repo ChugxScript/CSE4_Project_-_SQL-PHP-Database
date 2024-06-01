@@ -28,10 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ];
             echo json_encode($response);
         } else {
-            // echo '<script type="text/javascript">';
-            // echo 'alert("Incorrect username or password.");';
-            // echo 'window.location.href = "../index.php?login=error";';
-            // echo '</script>';
             $response = [
                 "role" => '',
                 "user_id" => '',
@@ -40,10 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($response);
         }
     } else {
-        // echo '<script type="text/javascript">';
-        // echo 'alert("Incorrect username or password.");';
-        // echo 'window.location.href = "../index.php?login=error";';
-        // echo '</script>';
         $response = [
             "role" => '',
             "user_id" => '',

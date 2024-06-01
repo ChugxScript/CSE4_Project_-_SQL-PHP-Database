@@ -16,9 +16,9 @@
             <div class="flex justify-between items-center">
                 <div class="text-xl font-bold">CSE4-PROJECT</div>
                 <ul class="flex space-x-4">
-                    <li><a href="index.php" class="hover:text-gray-300">Home</a></li>
+                    <li><a href="registrar.php" class="hover:text-gray-300">Home</a></li>
                     <li><a href="#" class="hover:text-gray-300">About</a></li>
-                    <li><a class="hover:text-gray-300" id="logOutBtn">Log out</a></li>
+                    <li><a href="../index.php" class="hover:text-gray-300" id="logOutBtn">Log out</a></li>
                 </ul>
             </div>
         </div>
@@ -38,7 +38,7 @@
 
                         // Retrieve user_id from query parameters
                         if (isset($_GET['user_id'])) {
-                            $user_id = intval($_GET['user_id']); // Sanitize the input
+                            $user_id = intval($_GET['user_id']);
 
                             // Prepare SQL statement to select user from database
                             $stmt = $conn->prepare("SELECT username FROM users WHERE user_id = ?");
@@ -50,8 +50,8 @@
                             if ($result->num_rows > 0) {
                                 $user = $result->fetch_assoc();
                                 $username = htmlspecialchars($user['username']); 
-                                if ($username === 'admin@tup.edu.ph'){
-                                    $username = 'Admin';
+                                if ($username === 'registrar@tup.edu.ph'){
+                                    $username = 'Registrar';
                                 }
                             }
 
@@ -131,6 +131,18 @@
                             <p class="text-3xl font-bold"><?php echo $total_courses; ?></p>
                         </div>
                     </div>
+
+                    <!-- student male and female -->
+                    <div class="bg-gray-800 p-4 rounded text-white">
+                        <h2 class="text-lg font-semibold mb-2">Student Gender Distribution</h2>
+                        <canvas id="studentGenderChart"></canvas>
+                    </div>
+
+                    <!-- adviser male and female -->
+                    <div class="bg-gray-800 p-4 rounded text-white">
+                        <h2 class="text-lg font-semibold mb-2">Advisor Gender Distribution</h2>
+                        <canvas id="advisorGenderChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -151,7 +163,7 @@
                     
 
                     <!-- + icon -->
-                    <button id="openModalButton" data-table='student' class="bg-green-500 text-white flex items-center px-4 py-2 rounded hover:bg-green-600 focus:outline-none">
+                    <button id="openModalButton" data-table='student' class="bg-green-500 text-white flex items-center px-4 py-2 rounded hover:bg-green-600 focus:outline-none openModalButton">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
@@ -162,36 +174,101 @@
                 <div id="student_table">
                     <!-- Student table will be loaded here -->
                 </div>
-                <!-- Pagination links -->
-                <div class="pagination mt-4">
-                    <div class="pagination-container">
-                        <?php
-                        include '../config/connect.php';
-
-                        // Calculate total number of pages
-                        $limit = 10;
-                        $sql = "SELECT COUNT(*) AS total FROM student";
-                        $result = $conn->query($sql);
-                        $row = $result->fetch_assoc();
-                        $total_pages = ceil($row["total"] / $limit);
-
-                        // Show pagination links
-                        for ($i = 1; $i <= $total_pages; $i++) {
-                            echo "<button onclick='loadPage(\"admin\", \"student\", $i)' class='px-3 py-1 rounded bg-gray-600 text-white'>$i</button>";
-                        }
-                        ?>
-                    </div>
-                </div>
             </div>
 
 
             <!-- ADVISOR area -->
+            <div id="advisor_container" class="col-span-5 bg-gray-900 p-4 rounded shadow-lg shadow-shadow hidden">
+                <h1 class="text-2xl font-bold mb-4 text-white">Advisor Table</h1>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <!-- Search bar -->
+                    <div class="flex-grow flex items-center bg-gray-800 rounded mr-4">
+                        <input type="text" id="advisor_searchBox" data-table="advisor" placeholder="Search..." class="px-4 py-2 w-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l" />
+                        <button id="advisor_search" data-table="advisor" class="px-4 py-2 rounded-r bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+
+                    <!-- + icon -->
+                    <button id="openModalButton" data-table='advisor' class="bg-green-500 text-white flex items-center px-4 py-2 rounded hover:bg-green-600 focus:outline-none openModalButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span>Add advisor</span>
+                    </button>
+                </div>
+
+                <div id="advisor_table">
+                    <!-- advisor table will be loaded here -->
+                </div>
+            </div>
+
             <!-- DEPARTMENT area -->
+            <div id="dept_container" class="col-span-5 bg-gray-900 p-4 rounded shadow-lg shadow-shadow hidden">
+                <h1 class="text-2xl font-bold mb-4 text-white">Department Table</h1>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <!-- Search bar -->
+                    <div class="flex-grow flex items-center bg-gray-800 rounded mr-4">
+                        <input type="text" id="dept_searchBox" data-table="department" placeholder="Search..." class="px-4 py-2 w-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l" />
+                        <button id="dept_search" data-table="department" class="px-4 py-2 rounded-r bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+
+                    <!-- + icon -->
+                    <button id="openModalButton" data-table='department' class="bg-green-500 text-white flex items-center px-4 py-2 rounded hover:bg-green-600 focus:outline-none openModalButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span>Add department</span>
+                    </button>
+                </div>
+
+                <div id="dept_table">
+                    <!-- department table will be loaded here -->
+                </div>
+            </div>
+
             <!-- COURSES area -->
-            
+            <div id="course_container" class="col-span-5 bg-gray-900 p-4 rounded shadow-lg shadow-shadow hidden">
+                <h1 class="text-2xl font-bold mb-4 text-white">Department Table</h1>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <!-- Search bar -->
+                    <div class="flex-grow flex items-center bg-gray-800 rounded mr-4">
+                        <input type="text" id="course_searchBox" data-table="course" placeholder="Search..." class="px-4 py-2 w-full bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-l" />
+                        <button id="course_search" data-table="course" class="px-4 py-2 rounded-r bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+
+                    <!-- + icon -->
+                    <button id="openModalButton" data-table='course' class="bg-green-500 text-white flex items-center px-4 py-2 rounded hover:bg-green-600 focus:outline-none openModalButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <span>Add course</span>
+                    </button>
+                </div>
+
+                <div id="course_table">
+                    <!-- course table will be loaded here -->
+                </div>
+            </div>
             
 
-            <!-- Student Details Modal -->
+            <!-- Details Modal -->
             <div id="TD_DetailsModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
                 <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -229,7 +306,7 @@
                         <div class="sm:flex sm:items-start">
                             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left sm:w-full">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                                    Create Student
+                                    Create Data
                                 </h3>
                                 <div class="mt-2" id="createFormContainer">
                                     <!-- Update form will be loaded here -->
@@ -237,7 +314,7 @@
                             </div>
                         </div>
                         <div class="sm:flex justify-center">
-                            <button type="button" id="confirmCreate" data-table='student' class="action-button create w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 sm:ml-3 sm:w-auto sm:text-sm">
+                            <button type="button" id="confirmCreate" class="action-button create w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 sm:ml-3 sm:w-auto sm:text-sm">
                                 Create
                             </button>
                             <button type="button" id="cancelCreate" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -329,8 +406,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/js/index.js"></script>
-    <script src="../assets/js/admin.js"></script>
+    <script src="../assets/js/registrar.js"></script>
+
+    <script>
+        var total_male_student = <?php echo getTotalMaleStudent($conn); ?>;
+        var total_female_student = <?php echo getTotalFemaleStudent($conn); ?>;
+        var total_male_advisor = <?php echo getTotalMaleAdvisor($conn); ?>;
+        var total_female_advisor = <?php echo getTotalFemaleAdvisor($conn); ?>;
+        console.log(`total_male_student: ${total_male_student}`);
+        console.log(`total_female_student: ${total_female_student}`);
+        console.log(`total_male_advisor: ${total_male_advisor}`);
+        console.log(`total_female_advisor: ${total_female_advisor}`);
+        renderStudentGenderChart(total_male_student, total_female_student);
+        renderAdvisorGenderChart(total_male_advisor, total_female_advisor);
+    </script>
 
 </body>
 </html>
